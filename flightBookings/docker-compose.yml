@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+  flightreservation.api:
+    image: ${DOCKER_REGISTRY-}webapi
+    container_name: flight-reservation-api
+    build:
+      context: .
+      dockerfile: Web.API/Dockerfile
+
+  flightreservation.db:
+    image: postgres:latest
+    container_name: flight-reservation-db
+    environment:
+      - POSTGRES_DB=flightreservation
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./.containers/db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
